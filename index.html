@@ -3,7 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <title>Valentine</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* CSS goes here */
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffe6eb;
+      font-family: "Comic Sans MS", cursive;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    #noBtn {
+      background-color: #bfbfbf;
+    }
+
+    /* Floating hearts */
+    .hearts span {
+      position: absolute;
+      bottom: -20px;
+      font-size: 24px;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* Screen shake */
+    .shake {
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
 </head>
 <body>
 
@@ -11,16 +77,89 @@
 
   <div class="container">
     <h1 id="question">Angie, will you be my Valentine? 💘</h1>
-
     <div class="buttons">
       <button id="yesBtn">Yes 💖</button>
       <button id="noBtn">Are you sure? 🤨</button>
     </div>
-
     <p id="response"></p>
   </div>
 
-  <!-- THIS LINE IS CRUCIAL -->
-  <script src="script.js"></script>
+  <script>
+    // JS goes here
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const response = document.getElementById("response");
+    const question = document.getElementById("question");
+    const heartsContainer = document.querySelector(".hearts");
+
+    let scale = 1;
+    let noClicks = 0;
+
+    const messages = [
+      "Are you REALLY sure? 😐",
+      "Think again 🫣",
+      "Please reconsider 🥺",
+      "Don't break my heart 💔",
+      "This is getting awkward 😭",
+      "You literally have no choice 😌"
+    ];
+
+    // YES button
+    yesBtn.addEventListener("click", () => {
+      question.textContent = "YAYYYYY ANGIE 💕💘";
+      response.textContent = "I knew you'd say yes, Angie 🥰 Happy Valentine’s Day 💖";
+      confetti();
+    });
+
+    // ARE YOU SURE button
+    noBtn.addEventListener("click", () => {
+      noClicks++;
+
+      scale += 0.25;
+      yesBtn.style.transform = `scale(${scale})`;
+
+      if (noClicks < messages.length) {
+        noBtn.textContent = messages[noClicks];
+      }
+
+      document.body.classList.add("shake");
+      setTimeout(() => {
+        document.body.classList.remove("shake");
+      }, 400);
+    });
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("span");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 300);
+
+    // Confetti
+    function confetti() {
+      for (let i = 0; i < 60; i++) {
+        const conf = document.createElement("span");
+        conf.textContent = "🎉";
+        conf.style.position = "absolute";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.top = Math.random() * 100 + "vh";
+        conf.style.fontSize = "20px";
+        document.body.appendChild(conf);
+
+        setTimeout(() => {
+          conf.remove();
+        }, 2000);
+      }
+    }
+  </script>
+
 </body>
 </html>
