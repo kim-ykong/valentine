@@ -1,0 +1,70 @@
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffe6eb;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2.7rem;
+}
+
+button {
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background-color: #ff4d6d;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+#noBtn {
+  background-color: #bfbfbf;
+}
+
+/* Floating hearts */
+.hearts span {
+  position: absolute;
+  bottom: -20px;
+  font-size: 24px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+/* Screen shake */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
